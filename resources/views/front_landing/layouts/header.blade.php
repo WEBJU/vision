@@ -35,33 +35,42 @@
                             </li>
                             
                             <li class="nav-item">
-                                <a href="#"
-                                   class="text-dark nav-link fw-5  fs-14 {{ Request::is('faqs','events','teams','event-details/*','page*') ? 'active' : '' }}">What we do <span><i class="fas fa-chevron-down"></i></span> </a>
-                                <ul class="dropdown-nav ps-0">
-                                    <li><a href="{{ route('landing.faqs') }}"
-                                        class="fs-14 fw-5 {{ Request::is('faqs') ? 'active' : '' }}">Programs</a>
-                                 </li>
-                                    
-                                    <li><a href="{{ route('landing.event') }}"
-                                           class="fs-14 fw-5 {{ Request::is('events','event-details/*') ? 'active' : '' }}">{{__('messages.events.events')}}</a>
-                                    </li>
-                                    @foreach ( $pages as $page)
-                                        @if($page->is_active)
-                                            <li>
-                                                <a href="{{ route('landing.page.detail',$page->id) }}"
-                                                   class="fs-14 fw-5 {{ Request::is('page/'.$page->id) ? 'active' : '' }}">{!! nl2br( \Illuminate\Support\Str::limit($page->name) ) !!}</a>
-                                            </li>
-                                        @endif
-                                    @endforeach
-                                    <li><a href="{{ route('landing.team')}}"
-                                           class="fs-14 fw-5 {{ Request::is('teams') ? 'active' : '' }}">{{__('messages.front_landing.team')}}</a>
-                                    </li>
-                                    <li><a href="{{ route('landing.faqs') }}"
-                                        class="fs-14 fw-5 {{ Request::is('faqs') ? 'active' : '' }}">{{__('messages.faqs.faqs')}}</a>
-                                 </li>
+    <a href="#" class="text-dark nav-link fw-5 fs-14 {{ Request::is('programs','faqs','events','teams','event-details/*','page*') ? 'active' : '' }}">
+        What we do <span><i class="fas fa-chevron-down"></i></span>
+    </a>
+    <ul class="dropdown-nav ps-0">
+        <li>
+            <a href="{{ route('landing.programs') }}" class="fs-14 fw-5 {{ Request::is('programs') ? 'active' : '' }}">
+                Programs
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('landing.faqs') }}" class="fs-14 fw-5 {{ Request::is('faqs') ? 'active' : '' }}">
+                FAQs
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('landing.event') }}" class="fs-14 fw-5 {{ Request::is('events','event-details/*') ? 'active' : '' }}">
+                {{ __('messages.events.events') }}
+            </a>
+        </li>
+        @foreach ($pages as $page)
+            @if($page->is_active)
+                <li>
+                    <a href="{{ route('landing.page.detail', $page->id) }}" class="fs-14 fw-5 {{ Request::is('page*') ? 'active' : '' }}">
+                        {!! nl2br(\Illuminate\Support\Str::limit($page->name)) !!}
+                    </a>
+                </li>
+            @endif
+        @endforeach
+        <li>
+            <a href="{{ route('landing.team') }}" class="fs-14 fw-5 {{ Request::is('teams') ? 'active' : '' }}">
+                {{ __('messages.front_landing.team') }}
+            </a>
+        </li>
+    </ul>
+</li>
 
-                                </ul>
-                            </li>
                             <li class="nav-item">
                                 <a href="#"
                                    class="text-dark nav-link fw-5  fs-14 {{ Request::is('news','reports','galleries','podcasts') ? 'active' : '' }}">Publications <span><i class="fas fa-chevron-down"></i></span></a>

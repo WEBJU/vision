@@ -35,6 +35,9 @@ Route::middleware(['xss'])->group(function () {
     Route::get('/teams', [TeamController::class, 'getTeam'])->name('landing.team');
     Route::get('/page/{page}', [PageController::class, 'pageDetail'])->name('landing.page.detail');
     Route::post('/news-comments', [LandingController::class, 'newsComments'])->name('landing.news-comments');
+    Route::get('/programs', [LandingController::class, 'index'])->name('landing.programs');
+Route::get('/programs/{id}', [LandingController::class, 'show'])->name('landing.programs.show');
+
 
     //stripe routes
     Route::post('stripe-payment', [StripeController::class, 'createSession'])->name('campaign.stripe-payment');

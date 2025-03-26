@@ -13,7 +13,7 @@ class ProjectTable extends LivewireTableComponent
      * 
      * @var string
      */
-    protected $pageName = 'project-table'; // Removed "string" type declaration
+    protected $pageName = 'projects'; // Removed "string" type declaration
 
     /**
      * The pagination theme to use.

@@ -18,9 +18,9 @@ Route::get('/html', function () {
     return view('html');
 });
 
-//Route::get('/', function () {
+// Route::get('/', function () {
 //    return (! Auth::check()) ? view('auth.login') : Redirect::to(getDashboardURL());
-//})->name('login');
+// })->name('login');
 
 Route::middleware('auth', 'xss')->group(function () {
     // Update profile
