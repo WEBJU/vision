@@ -75,11 +75,11 @@
                                 <a href="#"
                                    class="text-dark nav-link fw-5  fs-14 {{ Request::is('news','reports','galleries','podcasts') ? 'active' : '' }}">Publications <span><i class="fas fa-chevron-down"></i></span></a>
                                 <ul class="dropdown-nav ps-0">
-                                    <li><a href="{{ route('landing.faqs') }}"
+                                    <li><a href="{{ route('landing.news') }}"
                                         class="fs-14 fw-5 {{ Request::is('news') ? 'active' : '' }}">News</a>
                                  </li>
                                     
-                                    <li><a href="{{ route('landing.event') }}"
+                                    <li><a href="{{ route('landing.reports') }}"
                                            class="fs-14 fw-5 {{ Request::is('reports') ? 'active' : '' }}">Reports</a>
                                     </li>
                                     {{-- @foreach ( $pages as $page)
@@ -90,10 +90,10 @@
                                             </li>
                                         @endif
                                     @endforeach --}}
-                                    <li><a href="{{ route('landing.team')}}"
+                                    <li><a href="{{ route('landing.gallery')}}"
                                            class="fs-14 fw-5 {{ Request::is('gallery') ? 'active' : '' }}">Gallery</a>
                                     </li>
-                                    <li><a href="{{ route('landing.faqs') }}"
+                                    <li><a href="{{ route('landing.podcast') }}"
                                         class="fs-14 fw-5 {{ Request::is('podcast') ? 'active' : '' }}">Podcast</a>
                                  </li>
 
