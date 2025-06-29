@@ -10,12 +10,12 @@
         <!-- start hero-section -->
         <section class="hero-section">
             <div class="inner-bgimg  position-relative"
-                 style="background: url('{{ $contactUs['menu_image'] ? : asset('front_landing/images/causes-hero-img.png')}}');">
+                 style="background: url('{{ asset('front_landing/images/vision-14.jpg')}}');">
                 <div class="container">
                     <div class="row ">
                         <div class="col-lg-6 col-md-7 parallelogram-shape">
                             <div class="text-white inner-text position-relative">
-                                <p class="fs-18 fw-5 mb-md-3 pb-lg-2 mb-2">{{ $contactUs['menu_title'] }}</p>
+                                {{-- <p class="fs-18 fw-5 mb-md-3 pb-lg-2 mb-2">{{ $contactUs['menu_title'] }}</p> --}}
                                 <h2 class="fs-1 mb-md-0 fw-6">{{__('messages.contact_us.contact_us')}}</h2>
                             </div>
                         </div>
@@ -72,13 +72,13 @@
                             <h1>{{__('messages.front_landing.get_in_touch')}}</h1>
                     </div>
                     <div class="row">
-                        <div class="col-lg-4 mb-lg-0 mb-5">
+                        <div class="col-lg-6 mb-lg-0 mb-5">
                             <div id="map" class="map ">
-                                <iframe {!! explode(' ',getSettingValue('location_embedded_code'))[1] ?? '' !!} class="w-100 h-100 object-fit-cover rounded-10 border-0" allowfullscreen=""
-                                        loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.6792842243076!2d36.9366141!3d-1.3691157!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f1dbe48e9bb6d%3A0xa69fe6cb0b8cb0!2sVISION%20CHANGERS%20KENYA!5e0!3m2!1sen!2ske!4v1747037339897!5m2!1sen!2ske" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="w-100 h-100 object-fit-cover rounded-10 border-0" ></iframe>
+                               
                             </div>
                         </div>
-                        <div class="col-lg-8">
+                        <div class="col-lg-6">
                             <form id="getInTouchForm" class="row conact-form" method="post">
                                 @csrf
                                 <div class="row">

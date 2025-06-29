@@ -13,14 +13,14 @@ class ProjectTable extends LivewireTableComponent
      * 
      * @var string
      */
-    protected $pageName = 'projects'; // Removed "string" type declaration
+    protected string $pageName = 'projects'; // Removed "string" type declaration
 
     /**
      * The pagination theme to use.
      * 
      * @var string
      */
-    public $paginationTheme = 'bootstrap-5'; // Removed "string" type declaration
+    public  $paginationTheme = 'bootstrap-5'; // Removed "string" type declaration
 
     /**
      * Filter for status.
@@ -36,21 +36,21 @@ class ProjectTable extends LivewireTableComponent
      * 
      * @var string
      */
-    public $primaryKey = 'id'; // Removed "string" type declaration
+    public string $primaryKey = 'id'; // Removed "string" type declaration
 
     /**
      * Default column for sorting.
      * 
      * @var string
      */
-    public $defaultSortColumn = 'created_at'; // Removed "string" type declaration
+    public string $defaultSortColumn = 'created_at'; // Removed "string" type declaration
 
     /**
      * Default sorting direction.
      * 
      * @var string
      */
-    public $defaultSortDirection = 'desc'; // Removed "string" type declaration
+    public string $defaultSortDirection = 'desc'; // Removed "string" type declaration
 
     public function columns(): array
     {

@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 @section('title')
-    {{__('messages.campaign.add_campaign')}}
+    {{__('messages.project.add_project')}}
 @endsection
 @php $styleCss = 'style'; @endphp
 @section('header_toolbar')
@@ -24,8 +24,8 @@
     <div class="d-flex flex-column">
         <div class="card">
             <div class="card-body">
-                {{ Form::open(['route' => 'campaigns.store','files' => 'true','id'=>'campaignCreateForm']) }}
-                @include('admin.campaigns.fields')
+                {{ Form::open(['route' => 'projects.store','files' => 'true','id'=>'campaignCreateForm']) }}
+                @include('admin.projects.fields')
                 {{ Form::close() }}
             </div>
         </div>

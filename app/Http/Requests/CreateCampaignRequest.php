@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Campaign;
+use App\Models\Project;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateCampaignRequest extends FormRequest
@@ -24,6 +24,6 @@ class CreateCampaignRequest extends FormRequest
      */
     public function rules()
     {
-        return Campaign::$rules;
+        return Project::$rules;
     }
 }

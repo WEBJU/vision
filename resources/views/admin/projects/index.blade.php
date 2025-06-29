@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 @section('title')
-    {{__('messages.campaign.campaigns')}}
+    Projects
 @endsection
 @section('content')
 <div class="container-fluid">

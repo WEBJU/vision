@@ -247,11 +247,11 @@ Route::prefix('admin')->middleware('auth', 'xss', 'valid.user','role:admin')->gr
         // Campaigns
         Route::resource('projects', ProjectController::class);
         Route::post('update-field/{id}', [ProjectController::class, 'updateField'])->name('update.field');
-        Route::post('campaign-file/{id}', [ProjectController::class, 'projectFileStore'])->name('project.file.store');
-        Route::get('get-campaign-file/{id}', [ProjectController::class, 'getProjectFile'])->name('get.project.file');
-        Route::post('remove-project-file', [ProjectController::class, 'removeCampaignFile'])->name('remove.project.file');
-        Route::resource('campaign-faqs', ProjectController::class);
-        Route::resource('campaign-updates', CampaignUpdatesController::class);
+        Route::post('project-file/{id}', [ProjectController::class, 'projectFileStore'])->name('project.file.store');
+        Route::get('get-project-file/{id}', [ProjectController::class, 'getProjectFile'])->name('get.project.file');
+        Route::post('remove-project-file', [ProjectController::class, 'removeProjectFile'])->name('remove.project.file');
+        Route::resource('project-faqs', ProjectController::class);
+        Route::resource('project-updates', ProjectController::class);
     });
     
     // Teams

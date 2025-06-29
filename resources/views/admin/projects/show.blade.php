@@ -1,6 +1,7 @@
 @extends('admin/layouts.app')
 @section('title')
-    {{ __('messages.campaign.campaign_details') }}
+    {{-- {{ __('messages.project.project_details') }} --}}
+    Project Details
 @endsection
 @section('header_toolbar')
     <div class="container-fluid">
@@ -19,11 +20,11 @@
         <div class="d-flex flex-column">
             <div class="card">
                 <div class="card-body">
-                    @include('admin.campaigns.show_fields')
+                    @include('admin.projects.show_fields')
                 </div>
             </div>
             <div class="mt-7 overflow-hidden">
-                @include('admin.campaigns.campaign_faqs.index')
+                @include('admin.projects.project_faqs.index')
             </div>
         </div>
     </div>

@@ -41,9 +41,9 @@
                 <div class="rectangle-shape"></div>
             </div>
             @foreach($newsCategories as $newsCategory)
-                <a href="{{ route('landing.news' , ['category' => $newsCategory->id])}}" data-id="{{$newsCategory->id}}"
+                <a href="{{ route('landing.publications' , ['category' => $newsCategory->id])}}" data-id="{{$newsCategory->id}}"
                    class=" categories d-flex align-items-center justify-content-between bg-white rounded-10 mb-2 news-category-filter1">
-                    <span href="{{ route('landing.news' , ['category' => $newsCategory->id])}}"
+                    <span href="{{ route('landing.publications' , ['category' => $newsCategory->id])}}"
                           data-id="{{$newsCategory->id}}"
                           class="text-dark fs-16 fw-5 news-category-filter1">{{isset($newsCategory) ? $newsCategory->name : ''}}</span>
                     <button class="border-0">
@@ -64,7 +64,7 @@
             <div class="tags d-flex flex-wrap">
                 @foreach($newsTags as $newsTag)
                     <div class="tag me-2 mb-2">
-                        <a href="{{ route('landing.news' , ['tag' => $newsTag->id])}}"
+                        <a href="{{ route('landing.publications' , ['tag' => $newsTag->id])}}"
                            data-id="{{$newsTag->id}}"
                            class="text-dark news-tags-filter fs-16 fw-5">{{$newsTag->name}}</a>
                     </div>

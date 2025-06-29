@@ -5,7 +5,7 @@
             {{ Form::text('title', '', ['class' => 'form-control ', 'placeholder' => __('messages.common.title'), 'required', 'id' => 'campaignCreateTitle','maxLength'=>50]) }}
         </div>
     </div>
-    <div class="col-lg-6">
+    <div class="col-lg-6" hidden>
         <div class="mb-5">
             {{ Form::label('slug', __('messages.common.slug').':', ['class' => 'form-label required']) }}
             {{ Form::text('slug', '', ['class' => 'form-control ', 'placeholder' => __('messages.common.slug'), 'required', 'id' => 'campaignCreateSlug', 'readonly']) }}
@@ -14,7 +14,7 @@
     <div class="col-lg-6">
         <div class="mb-5">
             {{ Form::label('campaign_category_id', __('messages.campaign.campaign_category').':', ['class' => 'form-label required']) }}
-            {{ Form::select('campaign_category_id', $campaignCategory, null,['class' => 'form-select','required','placeholder' => __('messages.campaign.select_campaign_category'), 'id' => 'campaignCategoryId', 'data-control' => 'select2']) }}
+            {{ Form::select('campaign_id', $programCategory, null,['class' => 'form-select','required','placeholder' => __('Select Program'), 'id' => 'campaignCategoryId', 'data-control' => 'select2']) }}
         </div>
     </div>
     <div class="col-lg-6">
@@ -45,7 +45,7 @@
                     <span class="picker-edit rounded-circle text-gray-500 fs-small" data-bs-toggle="tooltip"
                           data-placement="top" data-bs-original-title="Change Image">
                         <label> 
-                            <i class="fa-solid fa-pen" id="profileImageIcon"></i> 
+                             <i class="fa-solid fa-pen" id="profileImageIcon"></i> 
                             <input type="file" name="image" class="image-upload d-none" accept="image/*"/>
                             <input type="hidden" name="avatar_remove">
                         </label> 

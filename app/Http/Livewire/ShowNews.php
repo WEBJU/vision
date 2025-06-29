@@ -53,26 +53,41 @@ class ShowNews extends Component
     /**
      * @return mixed
      */
-    public function newsies()
+  public function newsies()
     {
         /** @var News $query */
-        $query = News::withCount('newsComments')->with('users', 'newsCategory', 'newsComments', 'newsTags.news');
+        $query = News::withCount('newsComments')
+            ->with('users', 'newsCategory', 'newsComments', 'newsTags.news'); // Eager load related models
 
-        $query->when(! empty($this->newsCategory), function (Builder $q) {
-            $q->where('news_category_id', '=', $this->newsCategory);
+        // Filter by news category if set
+        $query->when(!empty($this->newsCategory), function (Builder $q) {
+            $q->whereHas('newsCategory', function (Builder $q) {
+                $q->where('name', $this->newsCategory);  // Using 'slug' for category matching
+            });
         });
 
-        $query->when(! empty($this->newsTags), function (Builder $q) {
+        // Filter by news tag ID if set
+        $query->when(!empty($this->newsTags), function (Builder $q) {
             $q->whereHas('newsTags.news', function (Builder $q) {
                 $q->where('news_tags_id', $this->newsTags);
             });
         });
 
-        if (! empty($this->searchByNewsNameDesc)) {
+        // Search news by title or description if a search term is provided
+        if (!empty($this->searchByNewsNameDesc)) {
             $query->where('title', 'like', '%'.trim($this->searchByNewsNameDesc).'%')
                 ->orWhere('description', 'like', '%'.trim($this->searchByNewsNameDesc).'%');
         }
 
-        return $query->paginate(7);
+        // Paginate the results
+        $newsItems = $query->paginate(7);
+
+        // Add category name to each news item (optional)
+        $newsItems->getCollection()->transform(function ($news) {
+            $news->category_name = $news->newsCategory->name;  // Add category name to news items
+            return $news;
+        });
+
+        return $newsItems;
     }
 }

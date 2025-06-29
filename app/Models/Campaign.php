@@ -103,7 +103,7 @@ class Campaign extends Model implements HasMedia
     /**
      * @var string
      */
-    protected $table = 'campaigns';
+    protected $table = 'programs';
 
     protected $appends = ['image', 'status_name'];
 
@@ -187,11 +187,12 @@ class Campaign extends Model implements HasMedia
      * @return string
      */
     public function getStatusNameAttribute(): string
-    {
-        $status = $this->status;
+{
+    $status = $this->status;
 
-        return self::STATUS_ARRAY[$status];
-    }
+    // Return the value from STATUS_ARRAY or 'Unknown Status' if the key doesn't exist
+    return self::STATUS_ARRAY[$status] ?? 'Pending';
+}
 
     /**
      * @return BelongsTo
@@ -204,6 +205,10 @@ class Campaign extends Model implements HasMedia
     public function campaignFaqs(): HasMany
     {
         return $this->hasMany(CampaignFaq::class);
+    }
+     public function projects(): HasMany
+    {
+        return $this->hasMany(Project::class);
     }
 
     public function campaignUpdates(): HasMany

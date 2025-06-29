@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateCampaignRequest;
-use App\Http\Requests\UpdateCampaignFieldRequest;
-use App\Http\Requests\UpdateCampaignRequest;
+use App\Http\Requests\CreateProjectRequest;
+use App\Http\Requests\UpdateProjectFieldRequest;
+use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Project;
+use App\Models\Campaign;
 use App\Models\CampaignCategory;
 use App\Models\Country;
 use App\Models\DonationGift;
-use App\Repositories\CampaignRepository;
+use App\Repositories\ProjectRepository;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -24,16 +26,16 @@ use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 class ProjectController extends Controller
 {
     
-    public CampaignRepository $campaignRepo;
+    public ProjectRepository $projectRepo;
 
-    /**
+    /** 
      * UserController constructor.
      *
-     * @param  CampaignRepository  $campaignRepository
+     * @param  ProjectRepository  $projectRepository
      */
-    public function __construct(CampaignRepository $campaignRepository)
+    public function __construct(ProjectRepository $projectRepository)
     {
-        $this->campaignRepo = $campaignRepository;
+        $this->projectRepo = $projectRepository;
     }
 
     /**
@@ -56,62 +58,62 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        $campaignCategory = CampaignCategory::whereIsActive(true)->pluck('name', 'id')->toArray();
+        $programCategory = CampaignCategory::whereIsActive(true)->pluck('name', 'id')->toArray();
         $status = Campaign::ADD_STATUS;
 
-        return view('admin.projects.create', compact('campaignCategory', 'status'));
+        return view('admin.projects.create', compact('programCategory', 'status'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  CreateCampaignRequest  $request
+     * @param  CreateProjectRequest  $request
      * @return Application|RedirectResponse|Redirector
      */
-    public function store(CreateCampaignRequest $request)
+    public function store(CreateProjectRequest $request)
     {
         $input = $request->all();
         $input['slug'] = $input['slug'] ?? str_replace('_', ' ', strtolower($input['title']));
-        $campaign = $this->campaignRepo->store($input);
+        $project = $this->projectRepo->store($input);
 
         Flash::success('Project created successfully.');
 
-        return redirect(route('projects.edit', $campaign->id));
+        return redirect(route('projects.edit', $project->id));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Campaign  $campaign
+     * @param  Project  $project
      * @return Application|Factory|View
      */
-    public function edit(Campaign $campaign)
+    public function edit(Project $project)
     {
         $campaignCategory = CampaignCategory::whereIsActive(true)->pluck('name', 'id')->toArray();
         $country = Country::all()->pluck('country_name', 'id')->toArray();
         $status = Project::ADD_STATUS;
         $currencies = $this->getCurrencies();
 
-        $giftIds = $campaign->campaignGifts()->pluck('donation_gift_id')->toArray();
-        $donationGifts = DonationGift::whereStatus(true)->pluck('title', 'id')->toArray();
+        // $giftIds = $campaign->campaignGifts()->pluck('donation_gift_id')->toArray();
+        // $donationGifts = DonationGift::whereStatus(true)->pluck('title', 'id')->toArray();
 
-        return view('admin.projects.edit', compact('campaign', 'campaignCategory', 'country', 'status', 'currencies', 'donationGifts', 'giftIds'));
+        return view('admin.projects.edit', compact('project', 'campaignCategory', 'country', 'status', 'currencies'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  Request  $request
-     * @param  Campaign  $campaign
+     * @param  Project  $project
      * @return Application|Redirector|RedirectResponse
      */
-    public function update(UpdateCampaignRequest $request, Project $project)
+    public function update(UpdateProjectRequest $request, Project $project)
     {
         $input = $request->all();
 
-        $this->campaignRepo->update($input, $project->id);
+        $this->projectRepo->update($input, $project->id);
 
-        Flash::success('Campaign updated successfully.');
+        Flash::success('Project updated successfully.');
 
         return redirect(route('project.edit', $project->id));
     }
@@ -119,22 +121,22 @@ class ProjectController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  Campaign  $campaign
+     * @param  Project  $project
      * @return void
      */
-    public function destroy(Project $campaign)
+    public function destroy(Project $project)
     {
-        $campaign->delete();
+        $project->delete();
 
         return $this->sendSuccess('Project deleted successfully.');
     }
 
     /**
-     * @param  Project  $campaign
+     * @param  Project  $project
      * @param  Request  $request
      * @return Application|Factory|View
      */
-    public function show(Project $campaign, Request $request)
+    public function show(Project $project, Request $request)
     {
         $option = $request->get('option');
 
@@ -144,20 +146,20 @@ class ProjectController extends Controller
             $option = 'donors';
         }
 
-        $campaign->load('campaignDonations');
+        // $project->load('campaignDonations');
 
-        return view('admin/campaigns.show', compact('campaign', 'option'));
+        return view('admin/projects.show', compact('project', 'option'));
     }
 
     /**
-     * @param  UpdateCampaignFieldRequest  $request
+     * @param  UpdateProjectFieldRequest  $request
      * @param $id
      * @return mixed
      */
-    public function updateField(UpdateCampaignFieldRequest $request, $id)
+    public function updateField(UpdateProjectFieldRequest $request, $id)
     {
         $input = $request->all();
-        $this->campaignRepo->updateField($input, $id);
+        $this->projectRepo->updateField($input, $id);
 
         return $this->sendSuccess('Project updated successfully.');
     }
@@ -167,10 +169,10 @@ class ProjectController extends Controller
      * @param $id
      * @return mixed
      */
-    public function campaignFileStore(Request $request, $id)
+    public function projectFileStore(Request $request, $id)
     {
         $input = $request->all();
-        $this->campaignRepo->campaignFileStore($input, $id);
+        $this->projectRepo->projectFileStore($input, $id);
 
         return $this->sendSuccess('File uploaded successfully.');
     }
@@ -179,7 +181,7 @@ class ProjectController extends Controller
      * @param $id
      * @return mixed
      */
-    public function getCampaignFile($id)
+    public function getProjectFile($id)
     {
         $asset = Project::find($id);
         $mediaUrl = [];
@@ -201,7 +203,7 @@ class ProjectController extends Controller
      * @param  Request  $request
      * @return mixed
      */
-    public function removeCampaignFile(Request $request)
+    public function removeProjectFile(Request $request)
     {
         try {
             DB::beginTransaction();

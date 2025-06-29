@@ -1,7 +1,9 @@
 @extends('admin.layouts.auth')
+
 @section('title')
-    {{__('messages.common.login')}}
+    {{ __('messages.common.login') }}
 @endsection
+
 @section('content')
     <div class="d-flex flex-column flex-column-fluid align-items-center justify-content-center p-4">
         <div class="col-12 text-center">
@@ -14,22 +16,22 @@
             @include('admin.layouts.errors')
         </div>
         <div class="bg-white rounded-15 shadow-md width-540 px-5 px-sm-7 py-10 mx-auto">
-            <h1 class="text-center mb-7">{{__('messages.common.sign_in')}}</h1>
+            <h1 class="text-center mb-7">{{ __('messages.common.sign_in') }}</h1>
             <form class="form w-100" method="POST" action="{{ route('login') }}">
-            @csrf
-            <!-- Email Address -->
+                @csrf
+                <!-- Email Address -->
                 <div class="mb-sm-7 mb-4">
                     <label for="email" class="form-label">
-                        {{__('messages.common.email')}}<span class="required"></span>
+                        {{ __('messages.common.email') }}<span class="required"></span>
                     </label>
                     <input name="email" type="email" class="form-control" value="{{ old('email') }}" id="email"
-                           aria-describedby="emailHelp" required placeholder=" {{ __('auth.login.enter_email')}}"
+                           aria-describedby="emailHelp" required placeholder=" {{ __('auth.login.enter_email') }}"
                            autofocus>
                 </div>
                 <!-- Password -->
                 <div class="mb-sm-7 mb-4">
                     <div class="d-flex justify-content-between">
-                        <label for="password" class="form-label">{{__('messages.user.password')}}<span
+                        <label for="password" class="form-label">{{ __('messages.user.password') }}<span
                                     class="required"></span></label>
                         @if (Route::has('password.request'))
                             <a href="{{ route('password.request') }}" class="link-info fs-6 text-decoration-none">
@@ -39,7 +41,7 @@
                     </div>
                     <div class="mb-3 position-relative">
                         <input name="password" type="password" class="form-control" id="password" required
-                               placeholder="{{ __('auth.login.password')}}" aria-label="Password"
+                               placeholder="{{ __('auth.login.password') }}" aria-label="Password"
                                data-toggle="password">
                         <span class="position-absolute d-flex align-items-center top-0 bottom-0 end-0 me-4 input-icon input-password-hide cursor-pointer text-gray-600">
                                 <i class="bi bi-eye-slash-fill"></i>
@@ -56,15 +58,12 @@
                     <button type="submit" class="btn btn-primary">{{ __('messages.common.login') }}</button>
                 </div>
                 <div class="d-flex align-items-center mb-10 mt-4">
-                    <span class="text-gray-700 me-2">{{__('messages.common.new_here').'?'}}</span>
+                    <span class="text-gray-700 me-2">{{ __('messages.common.new_here') . '?' }}</span>
                     <a href="{{ route('register') }}" class="link-info fs-6 text-decoration-none">
-                        {{__('messages.common.create_an_account')}}
+                        {{ __('messages.common.create_an_account') }}
                     </a>
                 </div>
             </form>
         </div>
     </div>
 @endsection
-
-
-

@@ -51,31 +51,30 @@
                 <div class="row mb-sm-7">
                     <div class="col-md-6">
                         <label for="password" class="form-label">
-                            {{ __('messages.user.password').':' }}<span class="required"></span>
+                            Phone Number<span class="required"></span>
                         </label>
                         <div class="mb-3 position-relative">
                             <input type="password" name="password" class="form-control" id="password"
-                                   placeholder=" {{ __('auth.login.password') }}" aria-describedby="password" required
+                                   placeholder=" Phone Number" aria-describedby="password" required
                                    aria-label="Password" data-toggle="password" autocomplete="new-password">
-                            <span class="position-absolute d-flex align-items-center top-0 bottom-0 end-0 me-4 input-icon input-password-hide cursor-pointer text-gray-600">
-                                <i class="bi bi-eye-slash-fill"></i>
+                            
                             </span>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <label for="password_confirmation" class="form-label">
-                            {{ __('messages.user.confirm_password').':' }}<span class="required"></span>
+                        <label for="dropdown_menu" class="form-label">
+                           Select Your Partnership Interest<span class="required"></span>
                         </label>
                         <div class="mb-3 position-relative">
-                            <input name="password_confirmation" type="password" class="form-control"
-                                   placeholder=" {{ __('auth.login.confirm_password') }}" id="password_confirmation"
-                                   aria-describedby="confirmPassword" required aria-label="Password"
-                                   data-toggle="password">
-                            <span class="position-absolute d-flex align-items-center top-0 bottom-0 end-0 me-4 input-icon input-password-hide cursor-pointer text-gray-600">
-                                <i class="bi bi-eye-slash-fill"></i>
-                            </span>
+                            <select name="dropdown_menu" id="dropdown_menu" class="form-control" required aria-label="Dropdown">
+                                <option value="" disabled selected>Choose one option</option>
+                                <option value="option1">Partner with Us</option>
+                                <option value="option2">Become a Volunteer</option>
+                                <option value="option3">Become a Mentor</option>
+                            </select>
                         </div>
                     </div>
+                    
                     <div class="text-muted">{{__('messages.common.use_8_or_more_characters')}}</div>
                 </div>
                 <div class="mb-sm-4 form-check">
@@ -90,12 +89,7 @@
                 <div class="d-grid">
                     <button type="submit" class="btn btn-primary">{{__('messages.common.submit')}}</button>
                 </div>
-                <div class="d-flex align-items-center mt-4">
-                    <span class="text-gray-700 me-2">{{__('messages.common.already_have_an_account').'?'}}</span>
-                    <a href="{{ route('login') }}" class="link-info fs-6 text-decoration-none">
-                        {{__('messages.common.sign_in_here')}}
-                    </a>
-                </div>
+                
             </form>
         </div>
     </div>

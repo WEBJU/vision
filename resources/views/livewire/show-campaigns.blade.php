@@ -116,7 +116,7 @@
             </div>
         </div>
             @else
-                <h3 align="center">{{__('No Causes found')}}</h3>
+                <h3 align="center">{{__('No Programs found')}}</h3>
             @endif
     </div>
     </div>

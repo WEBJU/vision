@@ -54,8 +54,8 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'https://vision.miright.co.ke'),
-    'media_disc' => env('MEDIA_DISK', 'https://vision.miright.co.ke'),
+    'url' => env('APP_URL', 'http://127.0.0.1:8000/'),
+    'media_disc' => env('MEDIA_DISK', 'public'),
     'asset_url' => env('ASSET_URL', null),
     'upgrade_mode' => env('UPGRADE_MODE'),
     /*

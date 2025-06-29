@@ -9,9 +9,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
-class Project extends Model
+class Project extends Model implements HasMedia
 {
-    
+     
 
 /**
  * App\Models\Campaign
@@ -29,7 +29,6 @@ class Project extends Model
  * @property int|null $status
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\CampaignCategory $campaignCategory
  * @property-read string $image
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|Media[] $media
  * @property-read int|null $media_count
@@ -101,7 +100,7 @@ class Project extends Model
 
     protected $appends = ['image', 'status_name'];
 
-    protected $with = ['campaignCategory', 'media'];
+    protected $with = ['media'];
 
     /**
      * @var string[]
@@ -121,8 +120,8 @@ class Project extends Model
     ];
 
     public static $rules = [
-        'title' => 'required|unique:campaigns,title|max:50',
-        'slug' => 'required|unique:campaigns,slug|max:15',
+        'title' => 'required|unique:projects,title|max:50',
+        'slug' => 'required|unique:projects,slug|max:15',
         'campaign_id' => 'required',
         'image' => 'required|mimes:jpeg,png,jpg',
         'status' => 'required',
@@ -168,9 +167,9 @@ class Project extends Model
 
   
 
-    public function campaign(): HasMany
+    public function campaign(): BelongsTo
     {
-        return $this->hasMany(Campaign::class);
+        return $this->belongsTo(Campaign::class);
     }
 
     public function projectUpdates(): HasMany

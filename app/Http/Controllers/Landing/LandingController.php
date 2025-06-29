@@ -10,6 +10,7 @@ use App\Models\AboutUs;
 use App\Models\Brand;
 use App\Models\CallToAction;
 use App\Models\Campaign;
+use App\Models\Project;
 use App\Models\CampaignCategory;
 use App\Models\CampaignDonation;
 use App\Models\Category;
@@ -56,8 +57,11 @@ class LandingController extends AppBaseController
         if ($settings['active_homepage_status'] == Setting::STATUS_HOMEPAGE_1) {
             $data['events'] = Event::all();
         } else {
-            $data['events'] = Event::with('eventCategory')->where('event_date', '>=',
-                Carbon::now())->latest()->take(3)->get();
+            $data['events'] = Event::with('eventCategory')->where(
+                'event_date',
+                '>=',
+                Carbon::now()
+            )->latest()->take(3)->get();
         }
 
         $data['sliderCard'] = SliderCard::pluck('value', 'key')->toArray();
@@ -92,11 +96,16 @@ class LandingController extends AppBaseController
 
         $data['latestNewsFeeds'] = News::with('newsCategory')->latest()->first();
 
-        $data['oldNewsFeeds'] = News::where('id', '!=',
-            $data['latestNewsFeeds'] != null ? $data['latestNewsFeeds']->id : '')->limit(3)->get();
+        $data['oldNewsFeeds'] = News::where(
+            'id',
+            '!=',
+            $data['latestNewsFeeds'] != null ? $data['latestNewsFeeds']->id : ''
+        )->limit(3)->get();
 
-        $data['campaigns'] = Campaign::with('campaignCategory', 'user')->where('status',
-            Campaign::STATUS_ACTIVE)->latest()->take(6)->orderBy('is_emergency', 'desc')->get();
+        $data['campaigns'] = Campaign::with('campaignCategory', 'user')->where(
+            'status',
+            Campaign::STATUS_ACTIVE
+        )->latest()->take(6)->orderBy('is_emergency', 'desc')->get();
 
         $data['brands'] = Brand::all();
 
@@ -135,6 +144,35 @@ class LandingController extends AppBaseController
 
         return view('front_landing.campaigns', compact('campaignCategories', 'contactUs', 'campaignCategoryId'));
     }
+    public function projects($id = null)
+    {
+        // Set the campaignCategoryId based on the incoming parameter or default to an empty string
+        if ($id) {
+            $campaignCategoryId = $id;
+        } else {
+            $campaignCategoryId = '';
+        }
+
+        // Retrieve the contact us data
+        $contactUs = ContactUs::pluck('value', 'key')->toArray();
+
+        // Retrieve projects with their associated campaigns
+        $projects = Project::with([
+            'campaign' => function ($query) {
+                $query->where('status', '=', Campaign::STATUS_ACTIVE); // Only active campaigns
+            }
+        ])
+            ->when($campaignCategoryId, function ($query) use ($campaignCategoryId) {
+                // If a campaign category ID is provided, filter projects by the corresponding campaign category
+                $query->whereHas('campaign', function ($query) use ($campaignCategoryId) {
+                    $query->where('campaign_category_id', $campaignCategoryId);
+                });
+            })
+            ->get();
+
+        // Pass the data to the view
+        return view('front_landing.project', compact('projects', 'contactUs', 'campaignCategoryId'));
+    }
 
     /**
      * @return Application|Factory|View|JsonResponse
@@ -161,7 +199,91 @@ class LandingController extends AppBaseController
     /**
      * @return Application|Factory|View
      */
-    public function news(Request $request)
+    public function publications(Request $request)
+    {
+        // Initialize category and tag variables
+        $newsCategoryId = '';
+        $newsTagId = '';
+
+        // Get the category and tag from the request if they are set
+        if (isset($request->category)) {
+            $newsCategoryId = $request->category;
+        }
+
+        if (isset($request->tag)) {
+            $newsTagId = $request->tag;
+        }
+
+        // Fetch the most popular news based on the number of users
+        $mostUser = News::withCount('users')
+            ->with('users', 'newsCategory')
+            ->whereHas('users', function (Builder $query) {
+                // You can add further conditions if needed
+            })
+            ->distinct()
+            ->take(1)
+            ->orderByDesc('users_count')
+            ->get();
+
+        // Fetch the latest four news items
+        $latestFourNews = News::latest()->take(4)->get();
+
+        // Fetch the news categories, filtering based on category ID if provided
+        $newsCategories = NewsCategory::withCount('news')
+            ->with('news')
+            ->whereHas('news', function (Builder $query) {
+                // You can add conditions for filtering the news if needed
+            })
+            ->distinct()
+            ->take(6)
+            ->orderByDesc('news_count')
+            ->get();
+
+        // Fetch the news tags
+        $newsTags = NewsTags::latest()->take(8)->get();
+
+        // Fetch images for the "Contact Us" section
+        $newsImg = ContactUs::pluck('value', 'key')->toArray();
+
+        // Query news based on category
+        $newsQuery = News::with('newsCategory', 'newsTags')->latest(); // Start the query for latest news
+
+        // If a category is selected, filter news by category
+        if ($newsCategoryId) {
+            // Optionally, you can use the category slug or ID
+            $newsQuery->where('news_category_id', $newsCategoryId);
+        }
+
+        // Optionally, filter by news tag
+        if ($newsTagId) {
+            $newsQuery->whereHas('newsTags', function (Builder $query) use ($newsTagId) {
+                $query->where('news_tags_id', $newsTagId);
+            });
+        }
+
+        // Paginate the results
+        $newsItems = $newsQuery->paginate(7);
+
+        // Return the data to the view
+        return view(
+            'front_landing.news',
+            compact(
+                'newsCategories',
+                'newsTags',
+                'latestFourNews',
+                'mostUser',
+                'newsCategoryId',
+                'newsTagId',
+                'newsImg',
+                'newsItems' // Pass the filtered news items
+            )
+        );
+    }
+
+    /**
+     * @return Application|Factory|View
+     */
+    public function gallery(Request $request)
     {
         $newsCategoryId = '';
         $newsTagId = '';
@@ -174,25 +296,129 @@ class LandingController extends AppBaseController
             $newsTagId = $request->tag;
         }
 
-        $mostUser = News::withCount('users')->with('users', 'newsCategory')->whereHas('users',
+        $mostUser = News::withCount('users')->with('users', 'newsCategory')->whereHas(
+            'users',
             function (Builder $query) {
-            })->distinct()->take(1)->orderByDesc('users_count')->get();
+            }
+        )->distinct()->take(1)->orderByDesc('users_count')->get();
 
         $latestFourNews = News::latest()->take(4)->get();
 
-        $newsCategories = NewsCategory::withCount('news')->with('news')->whereHas('news',
+        $newsCategories = NewsCategory::withCount('news')->with('news')->whereHas(
+            'news',
             function (Builder $query) {
-            })->distinct()->take(6)->orderByDesc('news_count')->get();
+            }
+        )->distinct()->take(6)->orderByDesc('news_count')->get();
 
         $newsTags = NewsTags::latest()->take(8)->get();
 
         $newsImg = ContactUs::pluck('value', 'key')->toArray();
 
-        return view('front_landing.news',
-            compact('newsCategories', 'newsTags', 'latestFourNews', 'mostUser', 'newsCategoryId', 'newsTagId',
-                'newsImg'));
+        return view(
+            'front_landing.gallery',
+            compact(
+                'newsCategories',
+                'newsTags',
+                'latestFourNews',
+                'mostUser',
+                'newsCategoryId',
+                'newsTagId',
+                'newsImg'
+            )
+        );
     }
 
+    /**
+     * @return Application|Factory|View
+     */
+    public function reports(Request $request)
+    {
+        $newsCategoryId = '';
+        $newsTagId = '';
+
+        if (isset($request->category)) {
+            $newsCategoryId = $request->category;
+        }
+
+        if (isset($request->tag)) {
+            $newsTagId = $request->tag;
+        }
+
+        $mostUser = News::withCount('users')->with('users', 'newsCategory')->whereHas(
+            'users',
+            function (Builder $query) {
+            }
+        )->distinct()->take(1)->orderByDesc('users_count')->get();
+
+        $latestFourNews = News::latest()->take(4)->get();
+
+        $newsCategories = NewsCategory::withCount('news')->with('news')->whereHas(
+            'news',
+            function (Builder $query) {
+            }
+        )->distinct()->take(6)->orderByDesc('news_count')->get();
+
+        $newsTags = NewsTags::latest()->take(8)->get();
+
+        $newsImg = ContactUs::pluck('value', 'key')->toArray();
+
+        return view(
+            'front_landing.news',
+            compact(
+                'newsCategories',
+                'newsTags',
+                'latestFourNews',
+                'mostUser',
+                'newsCategoryId',
+                'newsTagId',
+                'newsImg'
+            )
+        );
+    }
+    public function podcast(Request $request)
+    {
+        $newsCategoryId = '';
+        $newsTagId = '';
+
+        if (isset($request->category)) {
+            $newsCategoryId = $request->category;
+        }
+
+        if (isset($request->tag)) {
+            $newsTagId = $request->tag;
+        }
+
+        $mostUser = News::withCount('users')->with('users', 'newsCategory')->whereHas(
+            'users',
+            function (Builder $query) {
+            }
+        )->distinct()->take(1)->orderByDesc('users_count')->get();
+
+        $latestFourNews = News::latest()->take(4)->get();
+
+        $newsCategories = NewsCategory::withCount('news')->with('news')->whereHas(
+            'news',
+            function (Builder $query) {
+            }
+        )->distinct()->take(6)->orderByDesc('news_count')->get();
+
+        $newsTags = NewsTags::latest()->take(8)->get();
+
+        $newsImg = ContactUs::pluck('value', 'key')->toArray();
+
+        return view(
+            'front_landing.podcast',
+            compact(
+                'newsCategories',
+                'newsTags',
+                'latestFourNews',
+                'mostUser',
+                'newsCategoryId',
+                'newsTagId',
+                'newsImg'
+            )
+        );
+    }
     /**
      * @param  News  $news
      * @return Application|Factory|View
@@ -207,9 +433,11 @@ class LandingController extends AppBaseController
 
         $newsies = News::latest()->take(3)->get();
 
-        $newsCategories = NewsCategory::withCount('news')->with('news')->whereHas('news',
+        $newsCategories = NewsCategory::withCount('news')->with('news')->whereHas(
+            'news',
             function (Builder $query) {
-            })->distinct()->take(6)->orderByDesc('news_count')->get();
+            }
+        )->distinct()->take(6)->orderByDesc('news_count')->get();
 
         $latestFourNews = News::where('id', '!=', $news->id)->latest()->take(4)->get();
 
@@ -217,9 +445,19 @@ class LandingController extends AppBaseController
 
         $newsDetailsImg = ContactUs::pluck('value', 'key')->toArray();
 
-        return view('front_landing.news-details',
-            compact('news', 'newsies', 'newsCategories', 'newsTags', 'latestFourNews', 'allCommnets', 'relatedPosts',
-                'newsDetailsImg'));
+        return view(
+            'front_landing.news-details',
+            compact(
+                'news',
+                'newsies',
+                'newsCategories',
+                'newsTags',
+                'latestFourNews',
+                'allCommnets',
+                'relatedPosts',
+                'newsDetailsImg'
+            )
+        );
     }
 
     /**
@@ -246,18 +484,40 @@ class LandingController extends AppBaseController
     }
 
     /**
+     * @return Application|Factory|View
+     */
+    public function livelihoodsWellbeing()
+    {
+
+        return view('front_landing.livelihoods');
+    }
+    public function knowledgeDevelopment()
+    {
+
+        return view('front_landing.knowledge-development');
+    }
+
+    public function civicParticipation()
+    {
+
+        return view('front_landing.civic-participation');
+    }
+    /**
      * @param  Campaign  $campaign
      * @return Application|Factory|View
      */
     public function campaignDetails(Campaign $campaign)
     {
-        if(in_array($campaign->status ,[Campaign::STATUS_BLOCKED,Campaign::STATUS_FINISHED])){
+        if (in_array($campaign->status, [Campaign::STATUS_BLOCKED, Campaign::STATUS_FINISHED])) {
             return redirect(route('landing.home'));
         }
-        
+
         $contactUs = ContactUs::pluck('value', 'key')->toArray();
 
-        $campaign = $campaign->load('campaignCategory');
+        $campaign = $campaign->load([
+            'campaignCategory',
+            'projects', // Load related projects here
+        ]);
 
         $campaignCategories = CampaignCategory::withCount([
             'campaigns' => function ($q) {
@@ -265,24 +525,69 @@ class LandingController extends AppBaseController
             },
         ])->get();
 
-        $sidebarCampaignCategories = CampaignCategory::withCount('campaigns')->with('campaigns')->whereHas('campaigns',
-            function (Builder $query) {
-            })->distinct()->take(6)->orderByDesc('campaigns_count')->get();
+        $sidebarCampaignCategories = CampaignCategory::withCount('campaigns')
+            ->with('campaigns')
+            ->whereHas('campaigns', function (Builder $query) {
+                // Apply any filters if needed
+            })
+            ->distinct()
+            ->take(6)
+            ->orderByDesc('campaigns_count')
+            ->get();
 
         $medias = $campaign->getMedia(Campaign::CAMPAIGN_DROP_IMAGE);
 
-        $campaignFaqs = Campaign::with('campaignFaqs')->where('id', '=', $campaign->id)->first();
+        $campaignFaqs = Campaign::with('campaignFaqs')->where('id', $campaign->id)->first();
+        $campaignUpdates = Campaign::with('campaignUpdates')->where('id', $campaign->id)->first();
 
-        $campaignUpdates = Campaign::with('campaignUpdates')->where('id', '=', $campaign->id)->first();
+        $allDonors = CampaignDonation::where('campaign_id', $campaign->id)
+            ->latest()
+            ->take(5)
+            ->get();
 
-        $allDonors = CampaignDonation::where('campaign_id', '=', $campaign->id)->latest()->take(5)->get();
+        $donationEnableGifts = Campaign::with('campaignGifts')
+            ->where('id', $campaign->id)
+            ->where('gift_status', true)
+            ->first();
 
-        $donationEnableGifts = Campaign::with('campaignGifts')->where('id', '=', $campaign->id)->where('gift_status',
-            '=', true)->first();
+        return view(
+            'front_landing.campaign-details',
+            compact(
+                'campaign',
+                'campaignCategories',
+                'medias',
+                'contactUs',
+                'campaignFaqs',
+                'campaignUpdates',
+                'sidebarCampaignCategories',
+                'allDonors',
+                'donationEnableGifts'
+            )
+        );
+    }
 
-        return view('front_landing.campaign-details',
-            compact('campaign', 'campaignCategories', 'medias', 'contactUs', 'campaignFaqs', 'campaignUpdates',
-                'sidebarCampaignCategories', 'allDonors', 'donationEnableGifts'));
+    public function projectDetails(Project $project)
+    {
+        // if (in_array($project->status, [Project::STATUS_BLOCKED, Project::STATUS_FINISHED])) {
+        //     return redirect(route('landing.home'));
+        // }
+
+        $contactUs = ContactUs::pluck('value', 'key')->toArray();
+
+        // Load the campaign with the project
+        $project = Project::with('campaign')->find($project->id);  // Make sure to fetch the model instance.
+
+        // Now we can access the media
+        $medias = $project->getMedia(Project::PROJECT_DROP_IMAGE);  // Correctly calling getMedia() on the model instance.
+
+        return view(
+            'front_landing.project-details',
+            compact(
+                'project',
+                'medias',
+                'contactUs'
+            )
+        );
     }
 
     /**
@@ -327,17 +632,19 @@ class LandingController extends AppBaseController
     public function getPayment()
     {
 
-        
-        $amount_prefilled =5;
+
+        $amount_prefilled = 5;
 
         $totalAmount = $amount_prefilled;
         $chargeAmount = 0;
 
-        
 
-//        return view('front_landing.payment', compact('campaign', 'stripeWithdraw', 'paypalWithdraw', 'totalAmount', 'chargeAmount'));
 
-        return view('front_landing.payment',
-            compact( 'totalAmount', ));
+        //        return view('front_landing.payment', compact('campaign', 'stripeWithdraw', 'paypalWithdraw', 'totalAmount', 'chargeAmount'));
+
+        return view(
+            'front_landing.payment',
+            compact('totalAmount', )
+        );
     }
 }

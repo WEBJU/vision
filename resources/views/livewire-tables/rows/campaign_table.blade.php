@@ -41,9 +41,10 @@
             '4' => 'secondary',
         ];
     @endphp
-    <span class="badge bg-{{ $campaignStatusColorArr[$row->status] }}">{{ $row->status_name }}<br>
-        {{ Carbon\Carbon::parse($row->created_at)->isoFormat('Do MMM, YYYY') }}
-    </span>
+   <span class="badge bg-{{ $campaignStatusColorArr[$row->status] ?? 'secondary' }}">
+    {{ $row->status_name }}<br>
+    {{ Carbon\Carbon::parse($row->created_at)->isoFormat('Do MMM, YYYY') }}
+</span>
 </x-livewire-tables::bs5.table.cell>
 
 <x-livewire-tables::bs5.table.cell>
