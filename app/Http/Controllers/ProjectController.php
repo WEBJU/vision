@@ -57,12 +57,13 @@ class ProjectController extends Controller
      * @return Application|Factory|View
      */
     public function create()
-    {
-        $programCategory = CampaignCategory::whereIsActive(true)->pluck('name', 'id')->toArray();
-        $status = Campaign::ADD_STATUS;
+{
+    // Retrieve active campaigns instead of campaign categories
+    $campaigns = Campaign::where('status', Campaign::STATUS_ACTIVE)->pluck('title', 'id')->toArray();
+    $status = Campaign::ADD_STATUS;
 
-        return view('admin.projects.create', compact('programCategory', 'status'));
-    }
+    return view('admin.projects.create', compact('campaigns', 'status'));
+}
 
     /**
      * Store a newly created resource in storage.

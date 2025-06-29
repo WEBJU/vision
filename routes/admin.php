@@ -253,7 +253,7 @@ Route::prefix('admin')->middleware('auth', 'xss', 'valid.user','role:admin')->gr
         Route::resource('project-faqs', ProjectController::class);
         Route::resource('project-updates', ProjectController::class);
     });
-    
+     
     // Teams
     Route::middleware('permission:manage_teams')->group(function () {
         Route::resource('team-members', TeamController::class);

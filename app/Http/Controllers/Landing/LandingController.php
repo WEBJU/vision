@@ -514,9 +514,12 @@ class LandingController extends AppBaseController
 
         $contactUs = ContactUs::pluck('value', 'key')->toArray();
 
+        // Paginate the projects
         $campaign = $campaign->load([
             'campaignCategory',
-            'projects', // Load related projects here
+            'projects' => function ($query) {
+                $query->paginate(10);  // Paginate projects here, adjust the number as needed
+            },
         ]);
 
         $campaignCategories = CampaignCategory::withCount([

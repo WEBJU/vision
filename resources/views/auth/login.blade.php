@@ -57,12 +57,12 @@
                 <div class="d-grid">
                     <button type="submit" class="btn btn-primary">{{ __('messages.common.login') }}</button>
                 </div>
-                <div class="d-flex align-items-center mb-10 mt-4">
+                {{-- <div class="d-flex align-items-center mb-10 mt-4">
                     <span class="text-gray-700 me-2">{{ __('messages.common.new_here') . '?' }}</span>
                     <a href="{{ route('register') }}" class="link-info fs-6 text-decoration-none">
                         {{ __('messages.common.create_an_account') }}
                     </a>
-                </div>
+                </div> --}}
             </form>
         </div>
     </div>

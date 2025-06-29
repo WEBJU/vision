@@ -168,7 +168,7 @@ $brands = brands();
                             </div>
                             <div class="card-body">
                                 <h5 class="text-dark fs-14 mb-3">
-                                    <a class="text-dark" href="{{route('landing.knowledge')}}">Knowledge Development and Learning</a>
+                                    <a class="text-dark" href="{{route('landing.knowledge')}}">Knowledge Transfer and Learning</a>
                                 </h5>
                                 <div class="d-flex align-items-center justify-content-between flex-wrap">
                                     <div class="d-flex align-items-center me-2 mt-2">
@@ -299,7 +299,7 @@ $brands = brands();
                                 <li class="text-dark fs-16  mb-2"> <span class="fw-6">Our Vision</span> <br>
                                     We envision a world filled with optimism, tolerance, and social justice, where poverty
                                     has been eradicated, and every individual can live in dignity and security. </li>
-                                <li class="text-dark fs-16 mb-2"><span class="">Our Core Values</span><br>Creativity,
+                                <li class="text-dark fs-16 mb-2"><span class="fw-6">Our Core Values</span><br>Creativity,
                                     Integrity, Inquisitiveness, Participation </li>
                             </ul>
                         </div>
@@ -346,7 +346,7 @@ $brands = brands();
                     </div>
                     <div class="col-lg-3 col-6 text-white text-center py-4">
                         <h2 class="fs-1 fw-6">
-                            <span class="counter" data-countto="6" data-duration="3000">0</span>+
+                            <span class="counter" data-countto="12" data-duration="3000">0</span>+
                         </h2>
                         <h3 class="fs-6 mb-0">{{__('messages.front_landing.get_regards')}}</h3>
                     </div>

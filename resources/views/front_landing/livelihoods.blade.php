@@ -34,7 +34,7 @@
                             <img src="{{ asset('front_landing/images/vision-8.jpg') }}" alt="causes-image" class="w-100 h-100 object-fit-cover">
                         </div>
                         <div class="cause-desc mb-40">
-                            <h3 class="fw-6 fs-26 text-dark mb-3">. Livelihoods and Wellbeing</h3>
+                            <h3 class="fw-6 fs-26 text-dark mb-3">Livelihoods and Wellbeing</h3>
                             <div class="desc-box d-flex flex-wrap">
                                 <div class="d-flex align-items-center me-lg-5 me-4">
                                     <i class="fa-solid fa-tag text-danger fs-18 me-2"></i>
@@ -56,7 +56,7 @@
                                      aria-labelledby="pills-home-tab">
                                     <p class="fs-16 fw-5 text-dark mb-lg-4 mb-3"></p>
                                     <p class="fs-16 fw-5 text-dark mb-lg-4 mb-3 text-justify">
-                                        We are dedicated to bridging the gap between young job seekers and opportunities for productive employment and entrepreneurship. We provide a range of training programs tailored to equip participants with essential skills—both technical and interpersonal—while fostering an entrepreneurial spirit among aspiring business leaders. Through mentorship, technical support, and resource provision, we empower youth to develop viable business ideas, craft business plans, and access funding opportunities. Beyond economic self-sufficiency, our programs are designed to build resilience, enabling young individuals to adapt and thrive in a rapidly changing world. Together, these efforts contribute to household incomes, community growth, and national economic development.
+                                        We are dedicated to bridging the gap between young job seekers and opportunities for productive employment and entrepreneurship. We provide a range of training programs tailored to equip participants with essential skills—both technical and interpersonal—while fostering an entrepreneurial spirit among aspiring business leaders. Through mentorship, technical support, and resource provision, we empower youth, to empower communities to develop viable business ideas, craft business plans, and access funding opportunities. Beyond economic self-sufficiency, our programs are designed to build resilience, enabling young individuals to adapt and thrive in a rapidly changing world. Together, these efforts contribute to household incomes, community growth, and national economic development.
                                     </p>
                                 </div>
                             </div>

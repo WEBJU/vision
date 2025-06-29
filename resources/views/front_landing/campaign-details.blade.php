@@ -119,7 +119,7 @@
                         </div>
                        
                     </div>
-                    <div class="col-xl-4  pb-4 mb-2">
+                     <div class="col-xl-4  pb-4 mb-2">
                         <!--start time-counter-section -->
                         @if($campaign->campaign_end_method == App\Models\Campaign::AFTER_END_DATE && isset($campaign->deadline))
                             <input type="hidden" id="dueDate" value="{{$campaign->deadline}}">
@@ -154,32 +154,11 @@
                                 <div class="row">
 
                                     <div class=" col-xl-6 col-md-3 col-sm-6 text-center pt-4">
-                                        {{-- @if($campaign->campaignDonations->sum('donated_amount') >= $campaign->goal)
-                                        <p class="fs-14 mb-0 text-secondary"><i
-                                                class="fa-regular fa-circle-check me-1"></i>Completed</p>
-
-                                        <h5 class="fs-18 text-danger mb-0">
-                                            <span class="timecount" data-countto="14" data-duration="3000">N/A</span>
-                                        </h5>
-                                        @else --}}
-                                        {{-- <p class="fs-14 mb-0 text-secondary"><i
-                                                class="fa-regular fa-circle-check me-1"></i>Not Yet Completed</p> --}}
-                                        {{-- <h5 class="fs-18 text-danger mb-0">
-                                            @php
-                                            $nowDate = \Carbon\Carbon::now();
-                                            $day = $nowDate->floatDiffInDays($campaign->deadline);
-                                            @endphp
-                                            <span class="timecount" data-countto="14"
-                                                data-duration="3000">{{round($day)}}</span> days to go
-                                        </h5> --}}
-                                        {{-- @endif --}}
+                                       
                                     </div>
-                                    <div class="button col-xl-6 col-md-3 col-sm-6 align-items-center pt-4">
-                                        <a href="{{route('landing.payment', $campaign->slug)}}"
-                                            class="btn btn-danger w-100 mt-3{{ ((getSettingValue('stripe_enable')) == 1 || (getSettingValue('paypal_enable')) == 1 ? '' : '')}}">Donate</a>
-                                    </div>
+                                   
                                 </div>
-
+ 
                             </section>
                         @endif
                         <!-- end time-count-section -->
@@ -390,9 +369,9 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> 
         <!-- end cause-details-section-->
-         <div class="container">
+         <div class="container ">
                 <div class="row pt-100">
                     <div class="col-xl-8 ">
   <div class="cause-desc mb-40">
@@ -427,7 +406,7 @@
                     @endforeach
                 </div>
 
-                <div class="row justify-content-center align-items-center mt-3">
+                {{-- <div class="row justify-content-center align-items-center mt-3">
                     <div class="col-md-6 text-center">
                         <nav aria-label="Page navigation example">
                             <ul class="pagination justify-content-center mb-0 flex-wrap">
@@ -435,7 +414,7 @@
                             </ul>
                         </nav>
                     </div>
-                </div>
+                </div> --}}
             </div>
         @else
             <h3 class="pt-4 pb-4 mt-4 mb-4" align="center">{{ __('There are no Projects currently in this program') }}</h3>
