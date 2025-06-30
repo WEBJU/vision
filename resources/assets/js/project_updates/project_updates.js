@@ -12,7 +12,7 @@ listen('hidden.bs.modal', '#editProjectUpdatesModal', function () {
 listen('click', '.project-update-edit-btn', function (event) {
     let editProjectUpdatesId = $(event.currentTarget).data('id')
     renderProjectUpdatesData(editProjectUpdatesId)
-})
+}) 
 
 function renderProjectUpdatesData (id) {
     $.ajax({
