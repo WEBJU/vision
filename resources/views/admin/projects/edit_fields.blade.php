@@ -21,7 +21,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="mb-5">
-                                {{ Form::label('project_category_id', __('messages.project.project_category') . ':', ['class' => 'form-label required']) }}
+                                {{ Form::label('project_category_id', __('messages.project.project_categories') . ':', ['class' => 'form-label required']) }}
                                 {{ Form::select('campaign_id', $campaignCategory, isset($project) ? $project->campaign_id : '', ['class' => 'form-select', 'required', 'data-control' => 'select2', 'placeholder' => __('messages.project.select_project_category'), 'id' => 'projectCategoryId']) }}
                             </div>
                         </div>

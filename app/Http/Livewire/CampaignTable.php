@@ -25,12 +25,9 @@ class CampaignTable extends LivewireTableComponent
         return [
             Column::make(__('messages.common.title'), 'title')
                 ->sortable()->searchable()->addClass('250px'),
-            Column::make(__('messages.campaign.goal'), 'goal')
-                ->sortable()->searchable()->addClass('d-flex justify-content-center'),
-            Column::make(__('messages.campaign.received_funds'), 'id'),
             Column::make(__('messages.common.status'), 'status')
                 ->sortable()->searchable(),
-            Column::make(__('messages.campaign.donors'), 'created_at'),
+           
             Column::make(__('messages.common.action'))->addClass('text-center'),
         ];
     }

@@ -19,21 +19,6 @@
 
 <x-livewire-tables::bs5.table.cell>
     @php
-        $goal = getRaisedAmountPercentage($row->campaignDonations->sum('donated_amount'),$row->goal);
-        $style = 'style';    
-    @endphp
-
-    <div data-progress="{{$goal}}" style="--progress:{{$goal.'%'}};" class="progress m-auto"></div>
-</x-livewire-tables::bs5.table.cell>
-
-<x-livewire-tables::bs5.table.cell>
-    <div class="badge bg-light-primary">
-        {{  getCurrencySymbol($row->currency).' '.number_format($row->campaignDonations->sum('donated_amount'), 2) }}
-    </div>
-</x-livewire-tables::bs5.table.cell>
-
-<x-livewire-tables::bs5.table.cell>
-    @php
         $campaignStatusColorArr =  [
             '1' => 'success',
             '2' => 'danger',
@@ -47,11 +32,6 @@
 </span>
 </x-livewire-tables::bs5.table.cell>
 
-<x-livewire-tables::bs5.table.cell>
-    <a data-turbo="false" title="Donors" class="btn btn-sm btn-primary me-5" href="{{  url('admin/campaigns/'.$row->id.'?option=donors') }}">
-        {{ __('messages.campaign.donors') }}
-    </a>
-</x-livewire-tables::bs5.table.cell>
 
 <x-livewire-tables::bs5.table.cell>
 
