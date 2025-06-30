@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Campaign;
+use App\Models\Project;
 use App\Models\CampaignDonation;
 use App\Models\Earnings;
 use App\Models\User;
@@ -16,14 +17,14 @@ use Carbon\CarbonPeriod;
  * @version July 31, 2021, 7:41 am UTC
  */
 class DashboardRepository
-{
+{ 
     public function getDashboardData(): array
     {
         $data = [];
 
         $data['totalUser'] = User::all()->count();
         $data['totalCampaign'] = Campaign::all()->count();
-        $data['totalDonations'] = CampaignDonation::all()->sum('donated_amount');
+        $data['totalDonations'] = Project::all()->count();
         $data['totalVerifiedUsers'] = User::where('email_verified_at', '!=', null)->count();
         $data['totalDonor'] = CampaignDonation::select('email')->distinct()->count();
         $data['totalWithdraw'] = Withdraw::where('is_approved', Withdraw::APPROVED)->sum('amount');

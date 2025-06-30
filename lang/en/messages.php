@@ -589,7 +589,7 @@ return [
         'total_users' => 'Total Users',
         'total_verified_users' => 'Total Verified Users',
         'total_campaigns' => 'Total Programs',
-        'total_donations' => 'Total Donations',
+        'total_donations' => 'Total Projects',
         'total_donor' => 'Total Donors',
         'total_withdraw' => 'Total Withdraw',
         'recent_users_list' => 'Recent Users List',

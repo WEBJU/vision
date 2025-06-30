@@ -65,7 +65,7 @@
                             </div>
                             <div class="text-end text-white">
                                 <h2 class="fs-1-xxl fw-bolder text-white">
-                                    $ {{ formatCurrency($data['totalDonations']) }}</h2>
+                                     {{ formatCurrency($data['totalDonations']) }}</h2>
                                 <h3 class="mb-0 fs-4 fw-light">{{ __('messages.dashboards.total_donations') }}</h3>
                             </div>
                         </div>
@@ -125,30 +125,17 @@
                     <i class="fa-solid  fa-money-check-alt fs-1-xl text-white m-6 "></i>
                 </div>
                 <div class="text-end text-white">
-                    <h2 class="fs-1-xxl fw-bolder text-white">{{ formatCurrency($data['totalNoOfDonation']) }}</h2>
+                    <h2 class="fs-1-xxl fw-bolder text-white">{{$data['totalNoOfDonation']}}</h2>
                     <h3 class="mb-0 fs-4 fw-light">{{ __('messages.dashboards.number_of_donation')}}</h3>
                 </div>
             </div>
 
 
-            {{-- <div class="bg-primary shadow-md rounded-10 p-xxl-17 px-7 py-10 d-flex align-items-center justify-content-between mt-5">
-                <div
-                        class="bg-cyan-300 widget-icon rounded-10 d-flex align-items-center justify-content-center">
-                    <i class="fa-solid  fa-money-check-alt fs-1-xl text-white m-6 "></i>
-                </div>
-                <div class="text-end text-white">
-                    <h2 class="fs-1-xxl fw-bolder text-white">
-                        $ {{ formatCurrency($data['totalCommissionAmount']) }}</h2>
-                    <h3 class="mb-0 fs-4 fw-light">{{__('messages.dashboards.total_commission_amount')}}</h3>
-                </div>
-            </div> --}}
+
         </div>
     </div>
 
-    <div class="mt-7">
-        <h3>{{ __('messages.dashboards.recent_users_list') }}</h3>
-    </div>
-    <livewire:recent-user-list-table/>
+   
 </div>
 </div>
 @include('admin.dashboard.templates.templates')
