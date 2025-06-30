@@ -244,7 +244,7 @@ Route::prefix('admin')->middleware('auth', 'xss', 'valid.user','role:admin')->gr
             [DonationGiftController::class, 'giftDestroy'])->name('donation.gift.destroy');
     });
     Route::group([], function () {
-        // Campaigns
+        // Projects
         Route::resource('projects', ProjectController::class);
         Route::post('update-field/{id}', [ProjectController::class, 'updateField'])->name('update.field');
         Route::post('project-file/{id}', [ProjectController::class, 'projectFileStore'])->name('project.file.store');
