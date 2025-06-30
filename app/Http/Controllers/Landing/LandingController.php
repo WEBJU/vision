@@ -552,7 +552,7 @@ class LandingController extends AppBaseController
             ->where('id', $campaign->id)
             ->where('gift_status', true)
             ->first();
-
+   
         return view(
             'front_landing.campaign-details',
             compact(

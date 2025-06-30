@@ -102,7 +102,7 @@ class CampaignController extends AppBaseController
         $campaign->addMedia($image)->toMediaCollection(Campaign::CAMPAIGN_IMAGE);
     }
 
-    Flash::success('Campaign created successfully.');
+    Flash::success('Program created successfully.');
 
     return redirect(route('campaigns.edit', $campaign->id));
 }
@@ -140,7 +140,7 @@ class CampaignController extends AppBaseController
 
         $this->campaignRepo->update($input, $campaign->id);
 
-        Flash::success('Campaign updated successfully.');
+        Flash::success('Program updated successfully.');
 
         return redirect(route('campaigns.edit', $campaign->id));
     }
@@ -188,7 +188,7 @@ class CampaignController extends AppBaseController
         $input = $request->all();
         $this->campaignRepo->updateField($input, $id);
 
-        return $this->sendSuccess('Campaign updated successfully.');
+        return $this->sendSuccess('Program updated successfully.');
     }
 
     /**

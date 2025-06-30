@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\DB;
 use Laracasts\Flash\Flash;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
-class ProjectController extends Controller
+class ProjectController extends  AppBaseController
 {
     
     public ProjectRepository $projectRepo;
@@ -87,7 +87,7 @@ class ProjectController extends Controller
      *
      * @param  Project  $project
      * @return Application|Factory|View
-     */
+     */ 
     public function edit(Project $project)
     {
         $campaignCategory = CampaignCategory::whereIsActive(true)->pluck('name', 'id')->toArray();
@@ -151,7 +151,7 @@ class ProjectController extends Controller
 
         return view('admin/projects.show', compact('project', 'option'));
     }
-
+    
     /**
      * @param  UpdateProjectFieldRequest  $request
      * @param $id

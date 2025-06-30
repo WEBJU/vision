@@ -68,6 +68,7 @@ class Project extends Model implements HasMedia
 
     const PROJECT_DROP_IMAGE = 'project_drop_image';
 
+    const AFTER_GOAL_ACHIEVE = 2;
     const STATUS_ACTIVE = 1;
 
     const STATUS_BLOCKED = 2;
@@ -84,7 +85,7 @@ class Project extends Model implements HasMedia
         self::STATUS_BLOCKED => 'Blocked',
         self::STATUS_PENDING => 'Pending',
         self::STATUS_FINISHED => 'Finished',
-    ];
+    ]; 
 
     const ADD_STATUS = [
         self::STATUS_ACTIVE => 'Active',

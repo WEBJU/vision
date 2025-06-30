@@ -21,7 +21,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="mb-5">
-                                {{ Form::label('campaign_category_id', __('messages.project.project_category') . ':', ['class' => 'form-label required']) }}
+                                {{ Form::label('project_category_id', __('messages.project.project_category') . ':', ['class' => 'form-label required']) }}
                                 {{ Form::select('campaign_id', $campaignCategory, isset($project) ? $project->campaign_id : '', ['class' => 'form-select', 'required', 'data-control' => 'select2', 'placeholder' => __('messages.project.select_project_category'), 'id' => 'projectCategoryId']) }}
                             </div>
                         </div>
@@ -66,13 +66,13 @@
                         <div class="col-lg-12">
                             <div class="mb-5">
                                 {{ Form::label('description', __('messages.common.description') . ':', ['class' => 'form-label required']) }}
-                                <div id="editCampaignDescriptionId" class="vh-ql-container"></div>
-                                {{ Form::hidden('description', $project->description, ['id' => 'editCampaignDescription']) }}
+                                <div id="editProjectDescriptionId" class="vh-ql-container"></div>
+                                {{ Form::hidden('description', $project->description, ['id' => 'editProjectDescription']) }}
                             </div>
                         </div>
 
                         <div class="d-flex">
-                            {{ Form::submit(__('messages.common.save'), ['class' => 'btn btn-primary me-5', "id" => "editCampaignBtn"]) }}
+                            {{ Form::submit(__('messages.common.save'), ['class' => 'btn btn-primary me-5', "id" => "editProjectBtn"]) }}
                             <a href="{{ route('projects.index') }}" type="reset"
                                 class="btn btn-secondary">{{__('messages.common.discard')}}</a>
                         </div>
@@ -82,7 +82,7 @@
             </div>
             <div class="tab-pane fade  show active" id="addDefineGoal" role="tabpanel"
                 aria-labelledby="add-define-goal">
-                {{ Form::open(['id' => 'editCampaignFieldForm']) }}
+                {{ Form::open(['id' => 'editProjectFieldForm']) }}
                 {{ Form::hidden('id', isset($project) ? $project->id : '', ['id' => 'projectId']) }}
                 <div class="row">
                     <div class="col-sm-6">
@@ -122,14 +122,14 @@
                                 <div class="form-check">
                                     <label class="form-check-label">
                                         <input name="project_end_method" class="form-check-input me-3" type="radio"
-                                            value="{{ \App\Models\Campaign::AFTER_GOAL_ACHIEVE }}" {{ ($project->project_end_method == \App\Models\Campaign::AFTER_GOAL_ACHIEVE || $project->project_end_method == null) ? 'checked' : '' }}>
+                                            value="{{ \App\Models\Project::AFTER_GOAL_ACHIEVE }}" {{ ($project->project_end_method == \App\Models\Project::AFTER_GOAL_ACHIEVE || $project->project_end_method == null) ? 'checked' : '' }}>
                                         {{ __('messages.project.after_goal_achieve') }}
                                     </label>
                                 </div>
                                 <div class="d-inline-block col-6">
                                     <label class="form-check-label">
                                         <input name="project_end_method" class="form-check-input me-3" type="radio"
-                                            value="{{ \App\Models\Campaign::AFTER_END_DATE }}" {{ ($project->project_end_method == \App\Models\Campaign::AFTER_END_DATE) ? 'checked' : '' }}>
+                                            value="{{ \App\Models\Project::AFTER_END_DATE }}" {{ ($project->project_end_method == \App\Models\Project::AFTER_END_DATE) ? 'checked' : '' }}>
                                         {{ __('messages.project.after_end_date') }}
                                     </label>
                                 </div>
@@ -183,7 +183,7 @@
 
                     <div class="d-flex">
                         <button type="submit" class="btn btn-primary me-0"
-                            id="editCampaignFieldBtnSave">{{ __('messages.common.save') }}</button>&nbsp;&nbsp;&nbsp;
+                            id="editProjectFieldBtnSave">{{ __('messages.common.save') }}</button>&nbsp;&nbsp;&nbsp;
                         <a href="{{ route('projects.index') }}" type="reset"
                             class="btn btn-secondary">{{ __('messages.common.discard') }}</a>
                     </div>
@@ -192,7 +192,7 @@
             {{ Form::close() }}
 
             <div class="tab-pane fade" id="addGallery" role="tabpanel" aria-labelledby="add-gallery-tab">
-                {{ Form::open(['id' => 'editCampaignImageForm']) }}
+                {{ Form::open(['id' => 'editProjectImageForm']) }}
                 <div class="card-body maincard-section p-12">
                     <div class="row gx-10 mb-5">
                         <div class="col-12">

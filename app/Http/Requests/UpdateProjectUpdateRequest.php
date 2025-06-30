@@ -26,8 +26,9 @@ class UpdateProjectUpdateRequest extends FormRequest
     {
         $rules = ProjectUpdate::$rules;
 
-        $rules['title'] = 'required|max:255|unique:project_updates,title,'.$this->route('project_update')->id;
+        $rules['title'] = 'required|max:255|unique:project_updates,title,'.$this->route('project_update');
 
         return $rules;
     }
 }
+ 

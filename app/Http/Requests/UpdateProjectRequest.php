@@ -26,8 +26,8 @@ class UpdateProjectRequest extends FormRequest
     {
         $rules = Project::$rules;
 
-        $rules['title'] = 'required|max:50|unique:project,title,'.$this->route('project')->id;
-        $rules['slug'] = 'required|max:15|unique:project,slug,'.$this->route('project')->id;
+        $rules['title'] = 'required|max:50|unique:projects,title,'.$this->route('projects');
+        $rules['slug'] = 'required|max:50|unique:projects,slug,'.$this->route('projects');
 
         $rules['image'] = 'nullable';
 
