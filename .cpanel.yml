@@ -1,25 +1,44 @@
+# deployment:
+#   tasks:
+#     - export DEPLOYPATH=/home/visionch/public_html/
+    
+#     # Copy Laravel project files
+#     - /bin/cp -R . $DEPLOYPATH
+
+#     # Ensure file permissions are correct
+#     - chown -R visionch:visionch $DEPLOYPATH/storage
+#     - chown -R visionch:visionch $DEPLOYPATH/bootstrap/cache
+    
+#     # Run Composer to install dependencies
+#     - cd $DEPLOYPATH && /usr/local/bin/composer install --no-dev --optimize-autoloader
+
+#     # Set correct permissions for storage and cache directories
+#     - chmod -R 775 $DEPLOYPATH/storage
+#     - chmod -R 775 $DEPLOYPATH/bootstrap/cache
+
+#     # Run Laravel migrations (if necessary)
+#     # - cd $DEPLOYPATH && php artisan migrate --force
+
+#     # Clear cache, config, and optimize Laravel
+#     - cd $DEPLOYPATH && php artisan config:cache
+#     - cd $DEPLOYPATH && php artisan route:cache
+#     - cd $DEPLOYPATH && php artisan view:cache
 deployment:
   tasks:
     - export DEPLOYPATH=/home/visionch/public_html/
     
-    # Copy Laravel project files
-    - /bin/cp -R . $DEPLOYPATH
+    # Copy the entire Laravel project (except files you don't need, e.g., vendor or node_modules)
+    - /bin/cp -R * $DEPLOYPATH
 
-    # Ensure file permissions are correct
-    - chown -R visionch:visionch $DEPLOYPATH/storage
-    - chown -R visionch:visionch $DEPLOYPATH/bootstrap/cache
-    
-    # Run Composer to install dependencies
-    - cd $DEPLOYPATH && /usr/local/bin/composer install --no-dev --optimize-autoloader
+    # Copy necessary directories for the Laravel app
+    - /bin/cp -R assets $DEPLOYPATH
+    - /bin/cp -R css $DEPLOYPATH
+    - /bin/cp -R fonts $DEPLOYPATH
+    - /bin/cp -R img $DEPLOYPATH
+    - /bin/cp -R js $DEPLOYPATH
 
-    # Set correct permissions for storage and cache directories
-    - chmod -R 775 $DEPLOYPATH/storage
-    - chmod -R 775 $DEPLOYPATH/bootstrap/cache
+    # Ensure index.html or other static files are copied
+    - /bin/cp index.html $DEPLOYPATH
 
-    # Run Laravel migrations (if necessary)
-    # - cd $DEPLOYPATH && php artisan migrate --force
-
-    # Clear cache, config, and optimize Laravel
-    - cd $DEPLOYPATH && php artisan config:cache
-    - cd $DEPLOYPATH && php artisan route:cache
-    - cd $DEPLOYPATH && php artisan view:cache
+    # Optionally, copy environment file (.env) if you have it set up
+    - /bin/cp .env $DEPLOYPATH
