@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Brand;
 use App\Models\Campaign;
 use App\Models\Project;
 use App\Models\CampaignDonation;
@@ -26,8 +27,7 @@ class DashboardRepository
         $data['totalCampaign'] = Campaign::all()->count();
         $data['totalDonations'] = Project::all()->count();
         $data['totalVerifiedUsers'] = User::where('email_verified_at', '!=', null)->count();
-        $data['totalDonor'] = CampaignDonation::select('email')->distinct()->count();
-        $data['totalWithdraw'] = Withdraw::where('is_approved', Withdraw::APPROVED)->sum('amount');
+        $data['totalDonor'] = Brand::all()->count();
         $data['totalNoOfDonation'] = CampaignDonation::all()->count();
         $data['totalCommissionAmount'] = Earnings::all()->sum('commission_amount');
 

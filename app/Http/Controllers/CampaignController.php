@@ -72,40 +72,40 @@ class CampaignController extends AppBaseController
      * @return Application|RedirectResponse|Redirector
      */
     public function store(CreateCampaignRequest $request)
-{
-    // Retrieve individual inputs from the request
-    $title = $request->input('title');
-    $slug = $request->input('slug') ?? str_replace(' ', '-', strtolower($title));
-    $campaignCategoryId = $request->input('campaign_category_id');
-    $status = $request->input('status');
-    $shortDescription = $request->input('short_description');
-    // $description = $request->input('description'); // Storing raw HTML content from the editor
-    // Decode any HTML-encoded characters before saving
-    $description = htmlspecialchars_decode($request->input('description'));
-    $image = $request->file('image');
+    {
+        // Retrieve individual inputs from the request
+        $title = $request->input('title');
+        $slug = $request->input('slug') ?? str_replace(' ', '-', strtolower($title));
+        $campaignCategoryId = $request->input('campaign_category_id');
+        $status = $request->input('status');
+        $shortDescription = $request->input('short_description');
+        // $description = $request->input('description'); // Storing raw HTML content from the editor
+        // Decode any HTML-encoded characters before saving
+        $description = htmlspecialchars_decode($request->input('description'));
+        $image = $request->file('image');
 
-    // Prepare input array for storage
-    $input = [
-        'title' => $title,
-        'slug' => $slug,
-        'campaign_category_id' => $campaignCategoryId,
-        'status' => $status,
-        'short_description' => $shortDescription,
-        'description' => $description, // Retain HTML content
-    ];
+        // Prepare input array for storage
+        $input = [
+            'title' => $title,
+            'slug' => $slug,
+            'campaign_category_id' => $campaignCategoryId,
+            'status' => $status,
+            'short_description' => $shortDescription,
+            'description' => $description, // Retain HTML content
+        ];
 
-    // Store campaign
-    $campaign = $this->campaignRepo->store($input);
+        // Store campaign
+        $campaign = $this->campaignRepo->store($input);
 
-    // Handle image upload if provided
-    if ($image) {
-        $campaign->addMedia($image)->toMediaCollection(Campaign::CAMPAIGN_IMAGE);
+        // Handle image upload if provided
+        if ($image) {
+            $campaign->addMedia($image)->toMediaCollection(Campaign::CAMPAIGN_IMAGE);
+        }
+
+        Flash::success('Program created successfully.');
+
+        return redirect(route('campaigns.edit', $campaign->id));
     }
-
-    Flash::success('Program created successfully.');
-
-    return redirect(route('campaigns.edit', $campaign->id));
-}
 
 
     /**
@@ -257,7 +257,7 @@ class CampaignController extends AppBaseController
      */
     public function getCurrencies(): array
     {
-        $currencyPath = file_get_contents(resource_path().'/currencies/defaultCurrency.json');
+        $currencyPath = file_get_contents(resource_path() . '/currencies/defaultCurrency.json');
         $currenciesData = json_decode($currencyPath, true);
         $currencies = [];
 

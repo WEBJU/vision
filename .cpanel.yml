@@ -1,0 +1,25 @@
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/visionch/public_html/
+    
+    # Copy Laravel project files
+    - /bin/cp -R . $DEPLOYPATH
+
+    # Ensure file permissions are correct
+    - chown -R visionch:visionch $DEPLOYPATH/storage
+    - chown -R visionch:visionch $DEPLOYPATH/bootstrap/cache
+    
+    # Run Composer to install dependencies
+    - cd $DEPLOYPATH && /usr/local/bin/composer install --no-dev --optimize-autoloader
+
+    # Set correct permissions for storage and cache directories
+    - chmod -R 775 $DEPLOYPATH/storage
+    - chmod -R 775 $DEPLOYPATH/bootstrap/cache
+
+    # Run Laravel migrations (if necessary)
+    # - cd $DEPLOYPATH && php artisan migrate --force
+
+    # Clear cache, config, and optimize Laravel
+    - cd $DEPLOYPATH && php artisan config:cache
+    - cd $DEPLOYPATH && php artisan route:cache
+    - cd $DEPLOYPATH && php artisan view:cache

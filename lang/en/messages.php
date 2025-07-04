@@ -583,14 +583,14 @@ return [
         'charge_type' => 'Charge Type',
         'charge' => 'Charge',
     ],
-
+  
     'dashboards' => [
         'registration_on' => 'Registration On',
         'total_users' => 'Total Users',
         'total_verified_users' => 'Total Verified Users',
         'total_campaigns' => 'Total Programs',
         'total_donations' => 'Total Projects',
-        'total_donor' => 'Total Donors',
+        'total_donor' => 'Total Partners',
         'total_withdraw' => 'Total Withdraw',
         'recent_users_list' => 'Recent Users List',
         'monthly_donation_withdraw_report' => 'Monthly Donation & Withdraw Report',

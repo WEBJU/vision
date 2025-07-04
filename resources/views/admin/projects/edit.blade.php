@@ -22,7 +22,7 @@
     <div class="container-fluid">
         <div class="d-flex flex-column">
             {{ Form::hidden('project_is_edit', true, ['id' => 'projectIsEdit']) }}
-            {{ Form::hidden('edit_projectDescription', $project['description'], ['id' => 'editCampaignDescriptionData']) }}
+            {{ Form::hidden('edit_projectDescription', $project['description'], ['id' => 'editProjectDescriptionData']) }}
             <div class="mt-7 overflow-hidden">
                 <ul class="nav nav-tabs mb-5 pb-1 overflow-auto flex-nowrap text-nowrap" id="myTab" role="tablist">
                     <li class="nav-item position-relative me-7 mb-3" role="presentation">
